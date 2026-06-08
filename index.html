@@ -1045,7 +1045,8 @@
 
     .work-card-inner {
       position: relative;
-      aspect-ratio: 16/10;
+      aspect-ratio: 9/16;
+      max-height: 320px;
       border: var(--line-width) dashed var(--pencil);
       border-radius: var(--radius);
       display: flex;
@@ -1107,14 +1108,17 @@
 
     /* 视频缩略图 */
     .work-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
       border-radius: calc(var(--radius) - 2px);
       display: none;
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .work-card.has-image .work-image {
@@ -1253,7 +1257,8 @@
 
     .video-container {
       position: relative;
-      aspect-ratio: 16/9;
+      aspect-ratio: 9/16;
+      max-height: 70vh;
       background: var(--paper-dark);
       border: var(--line-width) dashed var(--pencil);
       border-radius: var(--radius);
@@ -1266,7 +1271,7 @@
     .video-container video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: calc(var(--radius) - 2px);
     }
 
@@ -1382,6 +1387,211 @@
       color: var(--ink-faint);
       margin-top: 8px;
       line-height: 1.7;
+    }
+
+    .work-view-all {
+      font-family: var(--font-hand);
+      font-size: 14px;
+      color: var(--coral);
+      margin-top: 12px;
+      letter-spacing: 1px;
+      transition: all var(--transition);
+    }
+
+    .work-card:hover .work-view-all {
+      color: var(--ink);
+    }
+
+    /* ============================================
+       CATEGORY MODAL - 分类详情模态框
+       ============================================ */
+    .category-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 42, 38, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .category-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .category-modal {
+      background: var(--paper);
+      border: var(--line-width-bold) solid var(--ink);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .category-modal-overlay.active .category-modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .category-modal::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: -6px;
+      bottom: -6px;
+      border: var(--line-width) solid var(--pencil);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .category-modal-close {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--coral);
+      border: var(--line-width-bold) solid var(--ink);
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-bounce);
+      z-index: 2;
+    }
+
+    .category-modal-close:hover {
+      transform: scale(1.15) rotate(90deg);
+      background: var(--coral-light);
+      color: var(--ink);
+    }
+
+    .category-modal-header {
+      margin-bottom: 24px;
+    }
+
+    .category-modal-title {
+      font-family: var(--font-hand);
+      font-size: 28px;
+      color: var(--ink);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    .category-modal-subtitle {
+      font-size: 14px;
+      color: var(--ink-faint);
+    }
+
+    .category-items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .category-item-card {
+      background: var(--paper);
+      border: var(--line-width) solid var(--ink);
+      border-radius: var(--radius);
+      padding: 16px;
+      cursor: pointer;
+      transition: all var(--transition-bounce);
+      position: relative;
+    }
+
+    .category-item-card::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      right: -3px;
+      bottom: -3px;
+      border-radius: var(--radius);
+      background: var(--pencil);
+      opacity: 0.15;
+      z-index: -1;
+      transition: all var(--transition);
+    }
+
+    .category-item-card:hover {
+      transform: translate(-3px, -3px);
+    }
+
+    .category-item-card:hover::before {
+      top: 5px;
+      left: 5px;
+    }
+
+    .category-item-thumb {
+      position: relative;
+      aspect-ratio: 9/16;
+      max-height: 200px;
+      border: var(--line-width) dashed var(--pencil);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--paper-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .category-item-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: calc(var(--radius) - 2px);
+    }
+
+    .category-item-thumb .item-play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--coral);
+      border: var(--line-width-bold) solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.9;
+      transition: all var(--transition-bounce);
+    }
+
+    .category-item-thumb .item-play-btn::after {
+      content: '▶';
+      color: white;
+      font-size: 14px;
+      margin-left: 2px;
+    }
+
+    .category-item-card:hover .item-play-btn {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+
+    .category-item-title {
+      font-family: var(--font-hand);
+      font-size: 16px;
+      color: var(--ink);
+      letter-spacing: 1px;
     }
 
     /* ============================================
@@ -1879,6 +2089,20 @@
     </div>
   </div>
 
+  <!-- Category Modal -->
+  <div class="category-modal-overlay" id="categoryModal" onclick="closeCategoryModal(event)">
+    <div class="category-modal" onclick="event.stopPropagation()">
+      <button class="category-modal-close" onclick="closeCategoryModal()" aria-label="关闭">✕</button>
+      <div class="category-modal-header">
+        <h3 class="category-modal-title" id="categoryModalTitle">分类标题</h3>
+        <p class="category-modal-subtitle" id="categoryModalSubtitle">共 0 个作品</p>
+      </div>
+      <div class="category-items-grid" id="categoryItemsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- ============================================
        JAVASCRIPT
        ============================================ -->
@@ -1944,40 +2168,56 @@
         }
       ],
 
-      // 作品展示数据 - 视频类作品，支持上传视频文件
+      // 作品展示数据 - 已上传视频作品
       works: [
         {
           id: 'short-video',
           title: '短视频编导作品',
           category: '视频创作',
           desc: '负责短视频选题、脚本撰写、拍摄剪辑全流程。涵盖抖音、小红书、B站等平台内容。',
-          image: null,
-          video: null, // 后续可设置为 'videos/short-video.mp4'
+          image: '🐟片/短视频编导作品/1-封面.jpg',
+          video: '🐟片/短视频编导作品/1(2)_compressed.mp4',
           placeholder: '🎬',
-          duration: '待上传',
-          count: 0
+          duration: '精选',
+          count: 5,
+          items: [
+            { title: '作品 1', video: '🐟片/短视频编导作品/1(2)_compressed.mp4', cover: '🐟片/短视频编导作品/1-封面.jpg' },
+            { title: '摩飞作品 28', video: '🐟片/短视频编导作品/3.20-摩飞-28_compressed.mp4', cover: '🐟片/短视频编导作品/3.20-摩飞-28-封面(3).jpg' },
+            { title: '摩飞作品 29', video: '🐟片/短视频编导作品/3.20-摩飞-29_compressed.mp4', cover: '🐟片/短视频编导作品/3.20-摩飞-29-封面(3).jpg' },
+            { title: '作品 5', video: '🐟片/短视频编导作品/5(2)_compressed.mp4', cover: '🐟片/短视频编导作品/5-封面.jpg' }
+          ]
         },
         {
           id: 'ip-planning',
           title: 'IP策划作品',
           category: '内容策划',
           desc: '为品牌打造个性化IP形象，从人设定位到内容矩阵的全案策划与执行。',
-          image: null,
-          video: null,
+          image: '🐟片/IP策划案/cover-1.jpg',
+          video: '🐟片/IP策划案/0dbe88d25fed93c1d3855b37c688b3d5.mp4',
           placeholder: '🎭',
-          duration: '待上传',
-          count: 0
+          duration: '精选',
+          count: 3,
+          items: [
+            { title: 'IP策划 1', video: '🐟片/IP策划案/0dbe88d25fed93c1d3855b37c688b3d5.mp4', cover: '🐟片/IP策划案/cover-1.jpg' },
+            { title: 'IP策划 2', video: '🐟片/IP策划案/1a8c2c8ce50b77ed72241d4d901a2d00.mp4', cover: '🐟片/IP策划案/cover-2.jpg' },
+            { title: 'IP策划 3', video: '🐟片/IP策划案/25847053d9d45e29c634dd3c9218c208.mp4', cover: '🐟片/IP策划案/cover-3.jpg' }
+          ]
         },
         {
           id: 'creative-plan',
           title: '创意策划案',
           category: '广告创意',
           desc: '品牌创意策划方案，将产品痛点转化为动人叙事，涵盖电商/信息流/新媒体。',
-          image: null,
-          video: null,
+          image: '🐟片/创意策划案/6月16日-京东-32-封面.jpg',
+          video: '🐟片/创意策划案/6月16日-京东-32(1)_compressed.mp4',
           placeholder: '💡',
-          duration: '待上传',
-          count: 0
+          duration: '精选',
+          count: 3,
+          items: [
+            { title: '京东创意 32', video: '🐟片/创意策划案/6月16日-京东-32(1)_compressed.mp4', cover: '🐟片/创意策划案/6月16日-京东-32-封面.jpg' },
+            { title: '京东创意 33', video: '🐟片/创意策划案/6月16日-京东-33(2).mp4', cover: '🐟片/创意策划案/6月16日-京东-33-封面.jpg' },
+            { title: '京东创意 34', video: '🐟片/创意策划案/6月16日-京东-34(1)_compressed.mp4', cover: '🐟片/创意策划案/6月16日-京东-34-封面.jpg' }
+          ]
         }
       ],
 
@@ -2087,24 +2327,25 @@
       const grid = document.getElementById('worksGrid');
       grid.innerHTML = data.works.map((work, i) => `
         <div class="sketch-card work-card reveal reveal-delay-${Math.min(i + 1, 5)} ${work.image ? 'has-image' : ''}"
-             onclick="openVideoModal('${work.id}')"
+             onclick="openCategoryModal('${work.id}')"
              role="button"
              tabindex="0"
-             aria-label="播放 ${work.title}"
-             onkeydown="if(event.key==='Enter'||event.key===' ')openVideoModal('${work.id}')">
+             aria-label="查看 ${work.title}"
+             onkeydown="if(event.key==='Enter'||event.key===' ')openCategoryModal('${work.id}')">
           <div class="tape tape-top"></div>
           ${work.count > 0 ? `<div class="work-count-badge">${work.count}</div>` : ''}
           <div class="work-card-inner">
             <span class="work-placeholder-icon">${work.placeholder}</span>
             <span class="work-placeholder-text">${work.image ? '' : '点击预览'}</span>
-            ${work.image ? `<img class="work-image" src="${work.image}" alt="${work.title}">` : ''}
+            ${work.image ? `<img class="work-image" src="${work.image}" alt="${work.title}" loading="lazy">` : ''}
             <div class="video-play-btn" aria-hidden="true"></div>
             <span class="video-duration">${work.duration}</span>
-            <div class="work-hover-hint">点击播放 ▶</div>
+            <div class="work-hover-hint">点击查看全部 ▶</div>
           </div>
           <div class="work-title">${work.title}</div>
           <div class="work-category">${work.category}</div>
           <div class="work-desc">${work.desc}</div>
+          <div class="work-view-all">查看全部作品 →</div>
         </div>
       `).join('');
     }
@@ -2355,12 +2596,94 @@
     // ESC键关闭模态框
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const modal = document.getElementById('videoModal');
-        if (modal.classList.contains('active')) {
+        const videoModal = document.getElementById('videoModal');
+        const categoryModal = document.getElementById('categoryModal');
+        if (videoModal.classList.contains('active')) {
           closeVideoModal();
+        }
+        if (categoryModal.classList.contains('active')) {
+          closeCategoryModal();
         }
       }
     });
+
+    // ============================================
+    // CATEGORY MODAL
+    // ============================================
+    function openCategoryModal(workId) {
+      const work = data.works.find(w => w.id === workId);
+      if (!work || !work.items || work.items.length === 0) {
+        // 如果没有子作品，直接打开视频播放
+        openVideoModal(workId);
+        return;
+      }
+
+      const modal = document.getElementById('categoryModal');
+      const title = document.getElementById('categoryModalTitle');
+      const subtitle = document.getElementById('categoryModalSubtitle');
+      const grid = document.getElementById('categoryItemsGrid');
+
+      title.textContent = work.title;
+      subtitle.textContent = `共 ${work.items.length} 个作品`;
+
+      grid.innerHTML = work.items.map((item, i) => `
+        <div class="category-item-card"
+             onclick="playCategoryItem('${work.id}', ${i})"
+             role="button"
+             tabindex="0"
+             aria-label="播放 ${item.title}"
+             onkeydown="if(event.key==='Enter'||event.key===' ')playCategoryItem('${work.id}', ${i})">
+          <div class="category-item-thumb">
+            ${item.cover ? `<img src="${item.cover}" alt="${item.title}" loading="lazy">` : `<span style="font-size:32px;opacity:0.3">${work.placeholder}</span>`}
+            <div class="item-play-btn" aria-hidden="true"></div>
+          </div>
+          <div class="category-item-title">${item.title}</div>
+        </div>
+      `).join('');
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCategoryModal(event) {
+      if (event && event.target.closest('.category-modal') && !event.target.closest('.category-modal-close')) {
+        return;
+      }
+
+      const modal = document.getElementById('categoryModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function playCategoryItem(workId, itemIndex) {
+      const work = data.works.find(w => w.id === workId);
+      if (!work || !work.items || !work.items[itemIndex]) return;
+
+      const item = work.items[itemIndex];
+
+      // 关闭分类模态框
+      closeCategoryModal();
+
+      // 打开视频播放模态框
+      const modal = document.getElementById('videoModal');
+      const title = document.getElementById('videoModalTitle');
+      const container = document.getElementById('videoContainer');
+
+      title.textContent = item.title;
+
+      container.innerHTML = `
+        <video controls autoplay playsinline style="width:100%;height:100%;object-fit:cover;border-radius:calc(var(--radius) - 2px);">
+          <source src="${item.video}" type="video/mp4">
+          <div class="video-placeholder-msg">
+            <span class="big-emoji">📱</span>
+            <div>您的浏览器不支持视频播放</div>
+          </div>
+        </video>
+      `;
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
 
     // ============================================
     // ACCESSIBILITY
